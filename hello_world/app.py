@@ -1,4 +1,3 @@
-import json
 import boto3
 import os
 import requests
@@ -53,12 +52,12 @@ def get_total_billing(client) -> dict:
     )
 
     return {
-        'start': response['ResultByTime'][0]['TimePeriod']['Start'],
+        'start': response['ResultsByTime'][0]['TimePeriod']['Start'],
         'end': response['ResultsByTime'][0]['TimePeriod']['End'],
         'billing': response['ResultsByTime'][0]['Total']['AmortizedCost']['Amount']
     }
 
-def get_service_billings(client) -> list;
+def get_service_billings(client) -> list:
     (start_date, end_date) = get_total_cost_date_range()
 
     response = client.get_cost_and_usage(
