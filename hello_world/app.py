@@ -6,6 +6,7 @@ import typing
 from datetime import datetime, timedelta, date
 
 SLACK_WEBHOOK_URL = os.environ['SLACK_WEBHOOK_URL']
+LINE_NOTIFY_TOKEN = os.environ['LINE_NOTIFY_TOKEN']
 
 def lambda_handler(event, context) -> None:
     # cost explorer client
@@ -108,6 +109,24 @@ def get_message(total_billing: dict, service_billings: list) -> (str, str):
         details.append(f' ・{service_name}: {billing:.2f} USD')
 
     return title, '\n'.join(details)
+
+def post_line_notify(title: str, detail: str) -> None:
+    url = 'https://notify-api.line.me/api/notify'
+    message = f'{title}\n{detail}'
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': f'Bearer {LINE_NOTIFY_TOKEN}'
+    }
+    payload = {
+        'message': message
+    }
+
+    try:
+       response = requests.post(url, headers=headers, data=payload)
+    except requests.exceptions.RequestException as e:
+        print(e)
+    else:
+        print(response.status_code)
 
 def post_slack(title: str, detail: str) -> None:
     payload = {

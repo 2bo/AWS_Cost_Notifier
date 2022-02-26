@@ -14,6 +14,9 @@ Parameters:
   SlackWebhookUrl:
     Type: String
     Default: hoge
+  LINENotifyToken:
+    Type: String
+    Default: hoge
 
 Resources:
   BillingIamRole:
@@ -50,6 +53,7 @@ Resources:
       Environment:
         Variables:
           SLACK_WEBHOOK_URL: !Ref SlackWebhookUrl
+          LINE_NOTIFY_TOKEN: !Ref LineNotifyToken
       Role: !GetAtt BillingIamRole.Arn
       Events:
         NotifyLINE:
