@@ -5,7 +5,6 @@ import requests
 import typing
 from datetime import datetime, timedelta, date
 
-SLACK_WEBHOOK_URL = os.environ['SLACK_WEBHOOK_URL']
 LINE_NOTIFY_TOKEN = os.environ['LINE_NOTIFY_TOKEN']
 
 def lambda_handler(event, context) -> None:
@@ -16,7 +15,7 @@ def lambda_handler(event, context) -> None:
     service_billings = get_service_billings(client)
 
     (title, detail) = get_message(total_billing, service_billings)
-    post_slack(title, detail)
+    post_line_notify(title, detail)
 
     """Sample pure Lambda function
 
@@ -123,24 +122,6 @@ def post_line_notify(title: str, detail: str) -> None:
 
     try:
        response = requests.post(url, headers=headers, data=payload)
-    except requests.exceptions.RequestException as e:
-        print(e)
-    else:
-        print(response.status_code)
-
-def post_slack(title: str, detail: str) -> None:
-    payload = {
-        'attachments': [
-            {
-                'color': '#36a64f',
-                'pretext': title,
-                'text': detail
-            }
-        ]
-    }
-
-    try:
-        response = requests.post(SLACK_WEBHOOK_URL, date=json.dumps(payload))
     except requests.exceptions.RequestException as e:
         print(e)
     else:
