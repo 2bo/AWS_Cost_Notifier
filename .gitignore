@@ -241,4 +241,7 @@ $RECYCLE.BIN/
 
 */build/*
 
+# https://stackoverflow.com/questions/64797150/should-i-include-my-aws-sam-file-in-my-repository
+.aws-sam/
+
 # End of https://www.gitignore.io/api/osx,linux,python,windows,pycharm,visualstudiocode
