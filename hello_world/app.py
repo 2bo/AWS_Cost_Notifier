@@ -110,7 +110,7 @@ def get_message(total_billing: dict, service_billings: list) -> (str, str):
 
 def post_line_notify(title: str, detail: str) -> None:
     url = 'https://notify-api.line.me/api/notify'
-    message = f'{title}\n{detail}'
+    message = f'\n{title}\n{detail}'
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': f'Bearer {LINE_NOTIFY_TOKEN}'
