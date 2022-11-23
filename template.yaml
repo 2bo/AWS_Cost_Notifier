@@ -55,7 +55,7 @@ Resources:
         NotifyLINE:
           Type: Schedule # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Schedule: cron(30 0 * * MON,THU *)
+            Schedule: cron(30 0 * * ? *)
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
